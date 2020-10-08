@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import HomePage from './pages/homepage/HomePage';
 import Header from './components/Header/Header';
 import About from './pages/About/About';
@@ -24,6 +26,7 @@ class App extends React.Component {
 
   componentDidMount () {
     // Opens a constant connection of the user to the session as long as the application is running.
+    const { setCurrentUser } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // If the user is signed in
       if (userAuth) {
@@ -33,15 +36,13 @@ class App extends React.Component {
 
         // onSnapshot() will allow you to use snapshot data in order to set the state inside react. snapShot.data() is necessary to access the data from the firestore DB.
         userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
+          setCurrentUser({
               id: snapShot.id,
               ...snapShot.data()
-            }
-          }, () => console.log(this.state));
-        })
+          });
+        });
       }
-      this.setState({ currentUser: userAuth});
+      setCurrentUser(userAuth);
     });
   }
 
@@ -63,7 +64,10 @@ class App extends React.Component {
       </div>
     );
   }
-  
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);
