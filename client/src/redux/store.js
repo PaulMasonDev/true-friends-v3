@@ -10,7 +10,7 @@ import rootReducer from './root-reducer';
 const middlewares = [logger];
 
 // Creation of the actual store. createStore() takes a reducer and then a function that sets up any middlewares we want to use.
-const store = createStore(rootReducer, applyMiddleware(middlewares));
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 export default store;
 

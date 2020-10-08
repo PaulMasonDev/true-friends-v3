@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import './Header.scss'
 import { auth } from '../../firebase/firebase.utils';
 
@@ -28,4 +30,10 @@ const Header = ({ currentUser }) => {
   );
 }
 
-export default Header;
+// This is the design pattern we will follow: 1. Create a mapStateToProps value and pass in the state.user.currentUser. This ".user" comes from the root reducer.
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
+});
+
+// Connect function passes in two arguments and is a Higher Order Component. Passing first the value we created with the mapStateToProps and then the Component that will use the state.
+export default connect(mapStateToProps)(Header);
