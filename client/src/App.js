@@ -1,17 +1,41 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from './redux/auth/auth.actions';
+import store from './redux/store';
+import './App.scss';
 
 import HomePage from './pages/homepage/HomePage';
 import Header from './components/Header/Header';
 import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
-import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.actions';
+import Register from './components/Auth/Register/Register';
+import Login from './components/Auth/Login/Login';
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import Dashboard from './components/Dashboard/Dashboard';
+
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+// Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
 
 
-import './App.scss';
 
 class App extends React.Component {
   constructor(){
@@ -22,35 +46,6 @@ class App extends React.Component {
     }
   }
 
-  unsubscribeFromAuth = null;
-
-  componentDidMount () {
-    // Opens a constant connection of the user to the session as long as the application is running.
-    const { setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      // If the user is signed in
-      if (userAuth) {
-        // Gettting the User Document Returned from the function in firebase config
-        // and storing it as userRef
-        const userRef = await createUserProfileDocument(userAuth);
-
-        // onSnapshot() will allow you to use snapshot data in order to set the state inside react. snapShot.data() is necessary to access the data from the firestore DB.
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data()
-          });
-        });
-      }
-      setCurrentUser(userAuth);
-    });
-  }
-
-  componentWillUnmount() {
-    // Closes subscription
-    this.unsubscribeFromAuth();
-  }
-
   render() {
     return (
       <div>
@@ -59,29 +54,17 @@ class App extends React.Component {
           <Route path="/" exact component={HomePage} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
-          <Route 
-            exact
-            path="/signin"
-            render={() => 
-            this.props.currentUser ? (
-              <Redirect to='/' />
-            ) : (
-              <SignInAndSignUp />
-            )
-            }
-          />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
         </Switch> 
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+export default connect(null, null)(App);

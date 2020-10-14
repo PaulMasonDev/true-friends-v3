@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 // THIS WILL EVENTUALLY BECOME AN AXIOS CALL WITH USEEFFECT TO A MONGODB DATABASE
 import TESTDATA from '../../TESTDATA';
@@ -12,7 +13,7 @@ import ItemDisplay from '../../components/ItemDisplay/ItemDisplay';
 
 import './Homepage.scss';
 
-const HomePage = () => {
+const HomePage = ( { auth }) => {
 
   const [userData, setUserData] = useState(TESTDATA.userData);// FUTURE AXIOS TO B/E
   const [displayData, setDisplayData] = useState(TESTDATA.displayData);
@@ -21,6 +22,17 @@ const HomePage = () => {
   
 
   const [searchName, setSearchName] = useState('');
+
+  //SETUP DATA
+  useEffect(()=> {
+    if(auth.isAuthenticated) {
+      axios.get(`/pulldata/${auth.user.id}`)
+        .then(res => {
+          setUserData(res.data)
+          console.log(res.data)})
+        .catch(err => console.log(err));
+    }
+  }, []);
 
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleName = (val) => {
@@ -62,15 +74,6 @@ const HomePage = () => {
     setDisplayItem(foundItem);
   }
 
-  const handleUserClick = () => {
-    const user = {
-      username: 'PPPPP'
-    }
-    axios.post('http://localhost:5000/users/add', user)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-  }
-
   return (
     <div>
       <div className="homepage">
@@ -98,11 +101,14 @@ const HomePage = () => {
           <ItemDisplay 
             displayItem={displayItem}
           />
-          <button onClick={handleUserClick}>CLICK ME TO ADD USER</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default HomePage;
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(HomePage);

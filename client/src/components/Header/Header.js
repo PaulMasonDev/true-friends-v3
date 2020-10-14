@@ -1,16 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logoutUser } from '../../redux/auth/auth.actions';
 
 import './Header.scss'
-import { auth } from '../../firebase/firebase.utils';
 
-const Header = ({ currentUser }) => {
+const Header = ({ auth, logoutUser }) => {
   return (
       <div className="header">
-        <h1>
-          <Link to="/">TRUE FRIENDS</Link>
-        </h1>
+        
+          {
+            auth.isAuthenticated ? (
+              <h3>You are a true friend, <span style={{color: "lightblue"}}>{auth.user.name}</span></h3>
+            )
+            : (
+              <h1><Link to="/">TRUE FRIENDS</Link></h1>
+            ) 
+          }
+          
+          
+        
         <ul>
           <li>
             <Link to="/about">ABOUT</Link>
@@ -19,21 +28,33 @@ const Header = ({ currentUser }) => {
             <Link to="/contact">CONTACT</Link>
           </li>
           {
-            currentUser ? 
-            <li onClick={() => auth.signOut()}>SIGN OUT</li>
-            : <li>
-                <Link to="/signin">SIGN IN</Link>
+            !auth.isAuthenticated ? (
+              <div>
+                <li>
+                  <Link to="/login">LOGIN</Link>
+                </li>
+                <li>
+                  <Link to="/register">REGISTER</Link>
+                </li>
+              </div>
+            ) : (
+              <li>
+                  <p onClick={logoutUser}>LOGOUT</p>
               </li>
-          } 
+            )
+          }
+          
+
+           
         </ul>
       </div>
   );
 }
 
-// This is the design pattern we will follow: 1. Create a mapStateToProps value and pass in the state.user.currentUser. This ".user" comes from the root reducer.
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
-});
-
 // Connect function passes in two arguments and is a Higher Order Component. Passing first the value we created with the mapStateToProps and then the Component that will use the state.
-export default connect(mapStateToProps)(Header);
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { logoutUser })(Header);
