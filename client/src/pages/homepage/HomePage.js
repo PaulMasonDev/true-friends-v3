@@ -11,11 +11,11 @@ import InfoDisplay from '../../components/InfoDisplay/InfoDisplay';
 import OccasionDisplay from '../../components/OccasionDisplay/OccasionDisplay';
 import ItemDisplay from '../../components/ItemDisplay/ItemDisplay';
 
-import { setFriend } from '../../redux/friends/friends.actions';
+import { loadFriends, setFriend } from '../../redux/friends/friends.actions';
 
 import './Homepage.scss';
 
-const HomePage = ( { auth, setFriend }) => {
+const HomePage = ( { auth, setFriend, loadFriends }) => {
 
   const [userData, setUserData] = useState(TESTDATA.userData);// FUTURE AXIOS TO B/E
   const [displayData, setDisplayData] = useState(TESTDATA.displayData);
@@ -29,7 +29,8 @@ const HomePage = ( { auth, setFriend }) => {
       axios.get(`/friends/pulldata/${auth.user.id}`)
         .then(res => {
           // setUserData(res)
-          console.log(res)})
+          loadFriends(res.data);
+          console.log(res.data)})
         .catch(err => console.log(err));
     }
   }, []);
@@ -37,7 +38,7 @@ const HomePage = ( { auth, setFriend }) => {
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleName = (val) => {
     setFriend(val);
-    setUserData(TESTDATA.userData)//Not needed. Used to prevent warning
+    // setUserData(TESTDATA.userData)//Not needed. Used to prevent warning
   }
   
   // Functions to handle finding
@@ -81,24 +82,23 @@ const HomePage = ( { auth, setFriend }) => {
           <AddName 
             handleName={handleName} 
           />
-          {/* <ListNames 
+          <ListNames 
             handleClick={handleNameClick} 
-            userData={userData} 
-          /> */}
+          />
         </div>
         <div className="homepage__info">
-          <InfoDisplay 
+          {/* <InfoDisplay 
             displayData={displayData}
             handleClick={handleOccasionClick}  
-          />
-          <OccasionDisplay 
+          /> */}
+          {/* <OccasionDisplay 
             displayData={displayData}
             displayOccasion={displayOccasion}
             handleClick={handleDisplayItem}
-          />
-          <ItemDisplay 
+          /> */}
+          {/* <ItemDisplay 
             displayItem={displayItem}
-          />
+          /> */}
         </div>
       </div>
     </div>
@@ -110,7 +110,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDipatchToProps = dispatch => ({
-  setFriend: friend => dispatch(setFriend(friend))
+  setFriend: friend => dispatch(setFriend(friend)),
+  loadFriends: friends => dispatch(loadFriends(friends))
 })
 
 export default connect(mapStateToProps, mapDipatchToProps)(HomePage);

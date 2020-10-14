@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 // Create Schema
 const FriendSchema = new Schema({
   name: String,
-  occasions: []
+  occasions: [
+  ]
 });
 
-module.exports = Friend = mongoose.model("friends", UserSchema);
+module.exports = Friend = mongoose.model("friends", FriendSchema);

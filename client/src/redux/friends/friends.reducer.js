@@ -2,7 +2,8 @@ import FriendsActionTypes from './friends.types';
 
 
 const initialState = {
-  name: ''
+  name: '',
+  friends: []
 };
 
 export default function(state = initialState, action) {
@@ -12,6 +13,11 @@ export default function(state = initialState, action) {
         ...state,
         name: action.payload
       };
+    case FriendsActionTypes.LOAD_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload
+      }
     default:
       return state;
   }

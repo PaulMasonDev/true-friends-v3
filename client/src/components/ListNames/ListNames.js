@@ -1,15 +1,15 @@
 import React from 'react'
-
+import { connect } from 'react-redux';
 import './ListNames.scss';
 
-const ListNames = (props) => {
-  const filteredFriends = props.userData.friends.filter(friend => 
-    friend.name.toLowerCase().includes(props.searchName.toLowerCase())
+const ListNames = ({friends, name, ...otherProps}) => {
+  const filteredFriends = friends.filter(friend => 
+    friend.toLowerCase().includes(name.toLowerCase())
     );
   
   const handleClick = (e) => {
     const name = e.target.getAttribute('data-name');
-    props.handleClick(name);
+    otherProps.handleClick(name);
   } 
 
   return (
@@ -18,11 +18,11 @@ const ListNames = (props) => {
         {filteredFriends.map(friend => {
           return (
           <li 
-            key={friend.id}
-            data-name={friend.name} 
+            key={friend._id}
+            data-name={friend} 
             onClick={handleClick}
             >
-            {friend.name}
+            {friend}
           </li>
           );
         })}
@@ -32,4 +32,8 @@ const ListNames = (props) => {
   );
 }
 
-export default ListNames;
+const mapStateToProps = state => ({
+  name: state.friends.name,
+  friends: state.friends.friends
+})
+export default connect(mapStateToProps)(ListNames);
