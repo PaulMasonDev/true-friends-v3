@@ -20,11 +20,7 @@ const UserSchema = new Schema({
     default: Date.now
   },
   friends: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Friend",
-      default: ""
-  }
+    { name: String }
   ]
 });
 

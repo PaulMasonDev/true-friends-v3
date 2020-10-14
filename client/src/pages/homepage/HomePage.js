@@ -11,32 +11,32 @@ import InfoDisplay from '../../components/InfoDisplay/InfoDisplay';
 import OccasionDisplay from '../../components/OccasionDisplay/OccasionDisplay';
 import ItemDisplay from '../../components/ItemDisplay/ItemDisplay';
 
+import { setFriend } from '../../redux/friends/friends.actions';
+
 import './Homepage.scss';
 
-const HomePage = ( { auth }) => {
+const HomePage = ( { auth, setFriend }) => {
 
   const [userData, setUserData] = useState(TESTDATA.userData);// FUTURE AXIOS TO B/E
   const [displayData, setDisplayData] = useState(TESTDATA.displayData);
   const [displayOccasion, setDisplayOccasion] = useState('');
   const [displayItem, setDisplayItem] = useState('');
-  
 
-  const [searchName, setSearchName] = useState('');
 
   //SETUP DATA
   useEffect(()=> {
     if(auth.isAuthenticated) {
-      axios.get(`/pulldata/${auth.user.id}`)
+      axios.get(`/friends/pulldata/${auth.user.id}`)
         .then(res => {
-          setUserData(res.data)
-          console.log(res.data)})
+          // setUserData(res)
+          console.log(res)})
         .catch(err => console.log(err));
     }
   }, []);
 
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleName = (val) => {
-    setSearchName(val);
+    setFriend(val);
     setUserData(TESTDATA.userData)//Not needed. Used to prevent warning
   }
   
@@ -80,13 +80,11 @@ const HomePage = ( { auth }) => {
         <div className="homepage__names">
           <AddName 
             handleName={handleName} 
-            searchName={searchName}
           />
-          <ListNames 
+          {/* <ListNames 
             handleClick={handleNameClick} 
             userData={userData} 
-            searchName={searchName}
-          />
+          /> */}
         </div>
         <div className="homepage__info">
           <InfoDisplay 
@@ -111,4 +109,8 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps)(HomePage);
+const mapDipatchToProps = dispatch => ({
+  setFriend: friend => dispatch(setFriend(friend))
+})
+
+export default connect(mapStateToProps, mapDipatchToProps)(HomePage);

@@ -1,4 +1,7 @@
+import axios from 'axios';
 import React from 'react';
+
+import { connect } from 'react-redux';
 
 import './AddName.scss';
 
@@ -9,6 +12,9 @@ const AddName = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    axios.post(`/friends/addfriend/${props.auth.user.id}/${props.name}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
     //LOGIC TO ADD NAME GOES HERE WHEN DB IS SETUP
   }
 
@@ -20,4 +26,9 @@ const AddName = (props) => {
   )
 }
 
-export default AddName;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  name: state.friends.name
+})
+
+export default connect(mapStateToProps)(AddName);
