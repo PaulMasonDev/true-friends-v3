@@ -3,7 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const path = require("path");
+const enforce = require("express-sslify");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const friends = require("./routes/crud/friends/friends");
