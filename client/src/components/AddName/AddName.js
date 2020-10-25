@@ -2,11 +2,15 @@ import axios from "axios";
 import React from "react";
 
 import { connect } from "react-redux";
-import { setFriend, loadFriends } from "../../redux/friends/friends.actions";
+import {
+  setFriend,
+  createFriend,
+  loadFriends,
+} from "../../redux/friends/friends.actions";
 
 import "./AddName.scss";
 
-const AddName = ({ auth, name, setFriend, loadFriends }) => {
+const AddName = ({ auth, name, setFriend, createFriend, loadFriends }) => {
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleChange = (e) => {
     setFriend(e.target.value);
@@ -14,14 +18,9 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    axios
-      .post(`/friends/addfriend/${auth.user.id}/${name.trim()}`)
-      .then((res) => {
-        alert(`${name.trim()}${res.data}`);
-        setFriend("");
-        loadFriends(auth.user.id);
-      })
-      .catch((err) => console.log(err));
+    createFriend(auth.user.id, name);
+    setFriend("");
+    loadFriends(auth.user.id);
   };
 
   return (
@@ -45,6 +44,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setFriend: (friend) => dispatch(setFriend(friend)),
   loadFriends: (userId) => dispatch(loadFriends(userId)),
+  createFriend: (userId, name) => dispatch(createFriend(userId, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddName);

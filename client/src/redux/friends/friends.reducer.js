@@ -1,23 +1,22 @@
-import FriendsActionTypes from './friends.types';
-
+import FriendsActionTypes from "./friends.types";
 
 const initialState = {
-  name: '',
-  friends: []
+  name: "",
+  friends: [],
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
-    case FriendsActionTypes.SET_FRIEND:
-      return {
-        ...state,
-        name: action.payload
-      };
     case FriendsActionTypes.LOAD_FRIENDS:
       return {
         ...state,
-        friends: action.payload
-      }
+        friends: action.payload,
+      };
+    case FriendsActionTypes.SET_FRIEND:
+      return {
+        ...state,
+        name: action.payload,
+      };
     default:
       return state;
   }

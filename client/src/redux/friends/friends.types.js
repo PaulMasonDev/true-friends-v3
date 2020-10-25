@@ -1,7 +1,8 @@
 const FriendsActionTypes = {
-  SET_FRIEND: 'SET_FRIEND',
-  ADD_FRIEND: 'ADD_FRIEND',
-  LOAD_FRIENDS: 'LOAD_FRIENDS'
-}
+  LOAD_FRIENDS: "LOAD_FRIENDS",
+  SET_FRIEND: "SET_FRIEND",
+  UPDATE_FRIEND: "UPDATE_FRIEND",
+  DELETE_FRIEND: "DELETE_FRIEND",
+};
 
 export default FriendsActionTypes;
