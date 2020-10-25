@@ -9,7 +9,7 @@ const users = require("./routes/api/users");
 const friends = require("./routes/crud/friends/friends");
 const User = require("./models/User");
 
-// require("dotenv").config();
+require("dotenv").config();
 
 //Config
 app.use(express.json());
