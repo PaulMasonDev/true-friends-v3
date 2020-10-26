@@ -18,18 +18,6 @@ export const setFriend = (friend) => ({
   payload: friend,
 });
 
-export const createFriend = (userId, name) => (dispatch) => {
-  axios
-    .post(`/friends/createfriend/${userId}/${name.trim()}`)
-    .then((res) => {
-      alert(`${name.trim()}${res.data}`);
-    })
-    .then((res) => {
-      axios.get(`/friends/pulldata/${userId}`).catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
-};
-
 export const deleteFriend = (userId, friendId, name) => (dispatch) => {
   if (
     window.confirm(
@@ -44,6 +32,12 @@ export const deleteFriend = (userId, friendId, name) => (dispatch) => {
       .then((res) => {
         axios
           .get(`/friends/pulldata/${userId}`)
+          .then((res) => {
+            dispatch({
+              type: FriendsActionTypes.LOAD_FRIENDS,
+              payload: res.data,
+            });
+          })
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));

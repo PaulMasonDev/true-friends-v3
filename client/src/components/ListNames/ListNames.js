@@ -1,28 +1,50 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loadFriends, deleteFriend } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
+import ContentEditable from "react-contenteditable";
 
 const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
+  const [focusedName, setFocusedName] = useState("");
+  // const [checkClass, setCheckClass] = useState("check inline icon hidden");
+
   const filteredFriends = friends.filter((friend) =>
     friend.name.toLowerCase().includes(name.toLowerCase())
   );
 
-  const handleClick = (e) => {
-    // Logic for openning up occasions
-  };
-
   const handleDelete = (e) => {
-    const friendId = e.target.parentNode.getAttribute("data-id");
-    const name = e.target.parentNode.getAttribute("data-name");
+    const friendId = e.currentTarget.parentNode.getAttribute("data-id");
+    const name = e.currentTarget.parentNode.getAttribute("data-name");
 
-    // axios
-    //   .delete(`/friends/deletefriend/${auth.user.id}/${friendId}`)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
     deleteFriend(auth.user.id, friendId, name);
     loadFriends(auth.user.id);
+  };
+
+  const handleFocus = (e) => {
+    // setCheckClass("check inline icon visible");
+  };
+
+  const handleBlur = (e) => {
+    // setCheckClass("check inline icon hidden");
+  };
+
+  const handleConfirm = (e) => {
+    const friendId = e.currentTarget.parentNode.getAttribute("data-id");
+    const name = e.currentTarget.previousElementSibling.textContent;
+    console.log("NAME", name);
+
+    axios
+      .put(`/friends/updatefriend/${friendId}/${name}`)
+      .then((res) => {
+        axios
+          .get(`/friends/pulldata/${auth.user.id}`)
+          .then(() => loadFriends(auth.user.id))
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -31,9 +53,23 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
         {filteredFriends.map((friend) => {
           return (
             <li key={friend._id} data-id={friend._id} data-name={friend.name}>
-              <span>Edit</span>
-              <span onClick={handleDelete}>Delete</span>
-              <span onClick={handleClick}>{friend.name}</span>
+              <FontAwesomeIcon
+                className="inline icon"
+                icon={faTrashAlt}
+                onClick={handleDelete}
+              />
+              <ContentEditable
+                className="inline"
+                html={friend.name}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                disabled="true"
+              />
+              <FontAwesomeIcon
+                className="check inline icon green"
+                icon={faCheck}
+                onClick={handleConfirm}
+              />
             </li>
           );
         })}
