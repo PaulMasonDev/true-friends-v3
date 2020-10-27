@@ -52,6 +52,14 @@ router.get("/pulldata/:id", (req, res) => {
 });
 
 // UPDATE friend route
+router.put("/updatefriend/:friendid/:name", (req, res) => {
+  const friendId = req.params.friendid;
+  const name = req.params.name;
+
+  Friend.findByIdAndUpdate(friendId, { name: name })
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+});
 
 // DELETE friend route
 router.delete("/deletefriend/:userid/:friendid", (req, res) => {

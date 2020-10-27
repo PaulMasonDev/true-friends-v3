@@ -4,11 +4,15 @@ import { connect } from "react-redux";
 import { loadFriends, deleteFriend } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashAlt,
+  faCheck,
+  faPencilAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import ContentEditable from "react-contenteditable";
 
 const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
-  const [focusedName, setFocusedName] = useState("");
+  const [tempName, setTempName] = useState("");
   // const [checkClass, setCheckClass] = useState("check inline icon hidden");
 
   const filteredFriends = friends.filter((friend) =>
@@ -19,7 +23,20 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const name = e.currentTarget.parentNode.getAttribute("data-name");
 
-    deleteFriend(auth.user.id, friendId, name);
+    if (
+      window.confirm(
+        `Are you sure you want to delete ${name} from your list? You will lose all data associated with this person.`
+      )
+    ) {
+      axios
+        .delete(`/friends/deletefriend/${auth.user.id}/${friendId}`)
+        .then((res) => {
+          alert(`${name.trim()} has been deleted.`);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      window.alert(`${name} was not deleted.  You are a TRUE FRIEND indeed!`);
+    }
     loadFriends(auth.user.id);
   };
 
@@ -30,21 +47,20 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
   const handleBlur = (e) => {
     // setCheckClass("check inline icon hidden");
   };
-
-  const handleConfirm = (e) => {
+  const handleEdit = (e) => {
+    const tempName = e.currentTarget.nextElementSibling.textContent;
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
-    const name = e.currentTarget.previousElementSibling.textContent;
-    console.log("NAME", name);
-
+    const name = prompt(`What do you want to change ${tempName} to?`);
+    console.log(name);
     axios
       .put(`/friends/updatefriend/${friendId}/${name}`)
       .then((res) => {
         axios
           .get(`/friends/pulldata/${auth.user.id}`)
-          .then(() => loadFriends(auth.user.id))
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
+    loadFriends(auth.user.id);
   };
 
   return (
@@ -58,17 +74,17 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
                 icon={faTrashAlt}
                 onClick={handleDelete}
               />
+              <FontAwesomeIcon
+                className="inline icon blue"
+                icon={faPencilAlt}
+                onClick={handleEdit}
+              />
               <ContentEditable
                 className="inline"
                 html={friend.name}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 disabled="true"
-              />
-              <FontAwesomeIcon
-                className="check inline icon green"
-                icon={faCheck}
-                onClick={handleConfirm}
               />
             </li>
           );
