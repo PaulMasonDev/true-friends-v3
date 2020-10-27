@@ -6,9 +6,11 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const enforce = require("express-sslify");
 const passport = require("passport");
+
+//Route Imports
 const users = require("./routes/api/users");
-const friends = require("./routes/crud/friends/friends");
-const User = require("./models/User");
+const friends = require("./routes/crud/friends");
+const holidays = require("./routes/crud/holidays");
 
 require("dotenv").config();
 
@@ -42,6 +44,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 app.use("/friends", friends);
+app.use("/holidays", holidays);
 
 // Redirect to React in non Dev environment
 if (environment !== "dev") {

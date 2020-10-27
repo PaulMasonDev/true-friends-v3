@@ -1,6 +1,6 @@
 const express = require("express");
-const Friend = require("../../../models/Friend");
-const User = require("../../../models/User");
+const Friend = require("../../models/Friend");
+const User = require("../../models/User");
 const router = express.Router();
 
 // CREATE Friend Route
@@ -33,15 +33,15 @@ router.get("/pulldata/:id", (req, res) => {
           await Friend.findById(friend._id)
             .then((foundFriend) => {
               newArr.push(foundFriend);
-              newArr.sort((a, b) => {
-                if (a.name < b.name) {
-                  return -1;
-                }
-                if (a.name > b.name) {
-                  return 1;
-                }
-                return 0;
-              });
+              // newArr.sort((a, b) => {
+              //   if (a.name < b.name) {
+              //     return -1;
+              //   }
+              //   if (a.name > b.name) {
+              //     return 1;
+              //   }
+              //   return 0;
+              // });
             })
             .catch((err) => console.log(err));
         })

@@ -1,19 +1,20 @@
-import FriendsActionTypes from "./friends.types";
+import HolidaysActionTypes from "./holidays.types";
 import axios from "axios";
 
-export const loadFriends = (userId) => (dispatch) => {
+export const loadHolidays = (friendId) => (dispatch) => {
   axios
-    .get(`/friends/pulldata/${userId}`)
+    .get(`/holidays/pulldata/${friendId}`)
     .then((res) => {
       dispatch({
-        type: FriendsActionTypes.LOAD_FRIENDS,
+        type: HolidaysActionTypes.LOAD_HOLIDAYS,
         payload: res.data,
       });
+      console.log(res);
     })
     .catch((err) => console.log(err));
 };
 
-export const setFriend = (friend) => ({
-  type: FriendsActionTypes.SET_FRIEND,
-  payload: friend,
+export const setFriendId = (friendId, friendName) => ({
+  type: HolidaysActionTypes.SET_FRIEND,
+  payload: { friendId, friendName },
 });

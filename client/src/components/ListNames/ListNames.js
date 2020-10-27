@@ -6,8 +6,9 @@ import "./ListNames.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import ContentEditable from "react-contenteditable";
+import { setFriendId } from "../../redux/holidays/holidays.actions";
 
-const ListNames = ({ friends, name, auth, loadFriends }) => {
+const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
   const filteredFriends = friends.filter((friend) =>
     friend.name.toLowerCase().includes(name.toLowerCase())
   );
@@ -49,6 +50,12 @@ const ListNames = ({ friends, name, auth, loadFriends }) => {
     loadFriends(auth.user.id);
   };
 
+  const handleNameClick = (e) => {
+    const friendId = e.currentTarget.parentNode.getAttribute("data-id");
+    const friendName = e.currentTarget.parentNode.getAttribute("data-name");
+    setFriendId(friendId, friendName);
+  };
+
   return (
     <div className="homepage__names__list">
       <ul>
@@ -68,6 +75,7 @@ const ListNames = ({ friends, name, auth, loadFriends }) => {
               <ContentEditable
                 className="inline"
                 html={friend.name}
+                onClick={handleNameClick}
                 // onFocus={handleFocus}
                 // onBlur={handleBlur}
                 disabled="true"
@@ -84,10 +92,13 @@ const mapStateToProps = (state) => ({
   name: state.friends.name,
   friends: state.friends.friends,
   auth: state.auth,
+  holidays: state.holidays,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadFriends: (userId) => dispatch(loadFriends(userId)),
+  setFriendId: (friendId, friendName) =>
+    dispatch(setFriendId(friendId, friendName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListNames);
