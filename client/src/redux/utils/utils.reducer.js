@@ -1,4 +1,3 @@
-import { refreshState } from "./utils.actions";
 import UtilsActionTypes from "./utils.types";
 
 const initialState = {};

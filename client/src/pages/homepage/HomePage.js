@@ -12,11 +12,11 @@ import { loadFriends, setFriend } from "../../redux/friends/friends.actions";
 
 import "./Homepage.scss";
 
-const HomePage = ({ auth, loadFriends }) => {
+const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
   //LOAD INITIAL USER DATA
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      loadFriends(auth.user.id);
+    if (isAuthenticated) {
+      loadFriends(userId);
     }
   }, []);
 
@@ -87,7 +87,8 @@ const HomePage = ({ auth, loadFriends }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  isAuthenticated: state.auth.isAuthenticated,
+  userId: state.auth.user.id,
 });
 
 const mapDipatchToProps = (dispatch) => ({

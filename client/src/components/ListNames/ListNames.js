@@ -1,20 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { loadFriends, deleteFriend } from "../../redux/friends/friends.actions";
+import { loadFriends } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashAlt,
-  faCheck,
-  faPencilAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import ContentEditable from "react-contenteditable";
 
-const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
-  const [tempName, setTempName] = useState("");
-  // const [checkClass, setCheckClass] = useState("check inline icon hidden");
-
+const ListNames = ({ friends, name, auth, loadFriends }) => {
   const filteredFriends = friends.filter((friend) =>
     friend.name.toLowerCase().includes(name.toLowerCase())
   );
@@ -40,13 +33,6 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
     loadFriends(auth.user.id);
   };
 
-  const handleFocus = (e) => {
-    // setCheckClass("check inline icon visible");
-  };
-
-  const handleBlur = (e) => {
-    // setCheckClass("check inline icon hidden");
-  };
   const handleEdit = (e) => {
     const tempName = e.currentTarget.nextElementSibling.textContent;
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
@@ -82,8 +68,8 @@ const ListNames = ({ friends, name, auth, loadFriends, deleteFriend }) => {
               <ContentEditable
                 className="inline"
                 html={friend.name}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
+                // onFocus={handleFocus}
+                // onBlur={handleBlur}
                 disabled="true"
               />
             </li>
@@ -102,8 +88,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadFriends: (userId) => dispatch(loadFriends(userId)),
-  deleteFriend: (userId, friendId, name) =>
-    dispatch(deleteFriend(userId, friendId, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListNames);

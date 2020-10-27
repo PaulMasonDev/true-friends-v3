@@ -1,20 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from './redux/auth/auth.actions';
-import store from './redux/store';
-import './App.scss';
+import { setCurrentUser, logoutUser } from "./redux/auth/auth.actions";
+import store from "./redux/store";
+import "./App.scss";
 
-import HomePage from './pages/homepage/HomePage';
-import Header from './components/Header/Header';
-import About from './pages/About/About';
-import Contact from './pages/Contact/Contact';
-import Register from './components/Auth/Register/Register';
-import Login from './components/Auth/Login/Login';
+import HomePage from "./pages/homepage/HomePage";
+import Header from "./components/Header/Header";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Register from "./components/Auth/Register/Register";
+import Login from "./components/Auth/Login/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from './components/Dashboard/Dashboard';
+import Dashboard from "./components/Dashboard/Dashboard";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -25,7 +25,7 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-// Check for expired token
+  // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
@@ -35,21 +35,19 @@ if (localStorage.jwtToken) {
   }
 }
 
-
-
 class App extends React.Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
-      currentUser: null
-    }
+      currentUser: null,
+    };
   }
 
   render() {
     return (
       <div>
-        <Header />  
+        <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/about" component={About} />
@@ -57,14 +55,10 @@ class App extends React.Component {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        </Switch> 
+        </Switch>
       </div>
     );
   }
 }
-
-
-
-
 
 export default connect(null, null)(App);
