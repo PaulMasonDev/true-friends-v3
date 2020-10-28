@@ -38,6 +38,9 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
           <ItemDisplay />
         </div>
       </div>
+      <footer>
+        <p>Copyright &copy; 2020 True Friends</p>
+      </footer>
     </div>
   );
 };
