@@ -32,6 +32,7 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
 
   return (
     <form className="homepage__names__add__search">
+      <h2>{auth.user.name}'s Friends</h2>
       <input
         onChange={handleChange}
         type="Search"

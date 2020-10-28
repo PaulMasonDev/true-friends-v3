@@ -53,38 +53,25 @@ router.get("/pulldata/:holidayId", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// // UPDATE holiday name route
-// router.put("/updateholiday/:holidayId/:holiday", (req, res) => {
-//   const holidayId = req.params.holidayId;
-//   const holiday = req.params.holiday;
-//   console.log("holidayId: ", holidayId, "holiday: ", holiday);
+// UPDATE item name route
+router.put("/updateitem/:itemId/:item", (req, res) => {
+  const itemId = req.params.itemId;
+  const item = req.params.item;
+  console.log("itemId: ", itemId, "item: ", item);
+  Item.findByIdAndUpdate(itemId, { name: item })
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+});
 
-//   Holiday.findByIdAndUpdate(holidayId, { name: holiday })
-//     .then((response) => console.log(response))
-//     .catch((err) => console.log(err));
-// });
-
-// // UPDATE holiday date route
-// // router.put("/updateholiday/:holidayId/:date", (req, res) => {
-// //   const holidayId = req.params.holidayId;
-// //   const date = req.params.date;
-// //   console.log("holidayId: ", holidayId, "date: ", date);
-
-// //   Holiday.findByIdAndUpdate(holidayId, { date: date })
-// //     .then((response) => console.log(response))
-// //     .catch((err) => console.log(err));
-// // });
-
-// // DELETE holiday route
-// router.delete("/deleteholiday/:friendId/:holidayId", (req, res) => {
-//   const friendId = req.params.friendId;
-//   const holidayId = req.params.holidayId;
-
-//   console.log("friendId: ", friendId, "holidayId: ", holidayId);
-//   Friend.findByIdAndUpdate(friendId, { $pull: { holidays: holidayId } })
-//     .then(() => Holiday.findByIdAndRemove(holidayId))
-//     .then((response) => console.log(response))
-//     .catch((err) => console.log(err));
-// });
+// DELETE item route
+router.delete("/deleteitem/:holidayId/:itemId", (req, res) => {
+  const holidayId = req.params.holidayId;
+  const itemId = req.params.itemId;
+  console.log("holidayId: ", holidayId, "itemId: ", itemId);
+  Holiday.findByIdAndUpdate(holidayId, { $pull: { items: itemId } })
+    .then(() => Item.findByIdAndRemove(itemId))
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+});
 
 module.exports = router;
