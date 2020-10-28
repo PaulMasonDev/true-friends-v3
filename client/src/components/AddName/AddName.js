@@ -10,6 +10,7 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleChange = (e) => {
     setFriend(e.target.value);
+    console.log(name.toLowerCase());
   };
 
   const handleClick = (e) => {

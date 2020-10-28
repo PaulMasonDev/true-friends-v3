@@ -68,7 +68,10 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
           <ListNames />
         </div>
         <div className="homepage__info">
-          <InfoDisplay />
+          {/* <InfoDisplay 
+            displayData={displayData}
+            handleClick={handleOccasionClick}  
+          /> */}
           {/* <OccasionDisplay 
             displayData={displayData}
             displayOccasion={displayOccasion}

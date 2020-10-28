@@ -33,16 +33,16 @@ router.get("/pulldata/:id", (req, res) => {
         foundFriend.holidays.map(async (holiday) => {
           await Holiday.findById(holiday._id)
             .then((foundHoliday) => {
-              newArr.push(foundfoundHoliday);
-              // newArr.sort((a, b) => {
-              //   if (a.name < b.name) {
-              //     return -1;
-              //   }
-              //   if (a.name > b.name) {
-              //     return 1;
-              //   }
-              //   return 0;
-              // });
+              newArr.push(foundHoliday);
+              newArr.sort((a, b) => {
+                if (a.name < b.name) {
+                  return -1;
+                }
+                if (a.name > b.name) {
+                  return 1;
+                }
+                return 0;
+              });
             })
             .catch((err) => console.log(err));
         })

@@ -1,11 +1,10 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadFriends } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import ContentEditable from "react-contenteditable";
 import { setFriendId } from "../../redux/holidays/holidays.actions";
 
 const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
@@ -51,6 +50,11 @@ const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
   };
 
   const handleNameClick = (e) => {
+    console.log(
+      "friendName",
+      e.currentTarget.parentNode.getAttribute("data-name")
+    );
+    console.log("friendId", e.currentTarget.parentNode.getAttribute("data-id"));
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const friendName = e.currentTarget.parentNode.getAttribute("data-name");
     setFriendId(friendId, friendName);
@@ -72,14 +76,9 @@ const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
                 icon={faPencilAlt}
                 onClick={handleEdit}
               />
-              <ContentEditable
-                className="inline"
-                html={friend.name}
-                onClick={handleNameClick}
-                // onFocus={handleFocus}
-                // onBlur={handleBlur}
-                disabled="true"
-              />
+              <span className="inline" onClick={handleNameClick}>
+                {friend.name}
+              </span>
             </li>
           );
         })}

@@ -1,20 +1,20 @@
 import HolidaysActionTypes from "./holidays.types";
 
 const initialState = {
-  friendId: null,
+  friendId: "",
   friendName: "",
   holidayName: "",
   holidays: [
-    {
-      holiday: "birthday",
-      date: "10/26/1981",
-      items: ["xbox", "lawnmower", "television"],
-    },
-    {
-      holiday: "anniversary",
-      date: "07/15/2018",
-      items: ["watch", "cruise", "vacation"],
-    },
+    // {
+    //   holiday: "birthday",
+    //   date: "10/26/1981",
+    //   items: ["xbox", "lawnmower", "television"],
+    // },
+    // {
+    //   holiday: "anniversary",
+    //   date: "07/15/2018",
+    //   items: ["watch", "cruise", "vacation"],
+    // },
   ],
 };
 
