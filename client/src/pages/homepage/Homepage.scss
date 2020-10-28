@@ -1,6 +1,6 @@
 .homepage {
   display: grid;
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 2fr 2fr;
   margin: 10px;
 }
 
@@ -13,7 +13,12 @@
 
 .homepage__info {
   display: grid;
-  grid-template-columns: 4fr 2fr;
+  grid-template-columns: 4fr;
+}
+
+.homepage__item {
+  display: grid;
+  grid-template-columns: 4fr 4fr;
 }
 
 @media (max-width: 500px) {
@@ -22,6 +27,10 @@
   }
 
   .homepage__info {
+    grid-template-columns: 1fr;
+  }
+
+  .homepage__item {
     grid-template-columns: 1fr;
   }
 }

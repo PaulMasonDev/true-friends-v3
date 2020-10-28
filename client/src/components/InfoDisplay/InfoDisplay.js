@@ -143,26 +143,6 @@ const InfoDisplay = ({ holidays, setHoliday, setDate, loadHolidays }) => {
       ) : (
         <h2>Friend's Holidays</h2>
       )}
-      {/* <h2>{name}</h2>
-      <ul>
-        {occasions
-          ? occasions.map((occasion) => {
-              return (
-                <li
-                  key={occasion.id}
-                  onClick={handleOccasionClick}
-                  data-occasion={occasion.occasion}
-                >
-                  {occasion.occasion}
-                </li>
-              );
-            })
-          : ""}
-      </ul> */}
-
-      <div className="homepage__info__addOccasion"></div>
-      <div className="homepage__info__addDate"></div>
-      <div className="homepage__info__addButton"></div>
     </div>
   );
 };

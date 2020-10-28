@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import AddName from "../../components/AddName/AddName";
 import ListNames from "../../components/ListNames/ListNames";
 import InfoDisplay from "../../components/InfoDisplay/InfoDisplay";
-import OccasionDisplay from "../../components/OccasionDisplay/OccasionDisplay";
+import HolidayDisplay from "../../components/HolidayDisplay/HolidayDisplay";
 import ItemDisplay from "../../components/ItemDisplay/ItemDisplay";
 
 import { loadFriends, setFriend } from "../../redux/friends/friends.actions";
@@ -30,13 +30,9 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
         </div>
         <div className="homepage__info">
           <InfoDisplay />
-          {/* <OccasionDisplay 
-            displayData={displayData}
-            displayOccasion={displayOccasion}
-            handleClick={handleDisplayItem}
-          /> */}
         </div>
         <div className="homepage__item">
+          <HolidayDisplay />
           {/* <ItemDisplay 
             displayItem={displayItem}
           /> */}

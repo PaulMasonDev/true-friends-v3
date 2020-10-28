@@ -4,6 +4,7 @@ import errorReducer from "./auth/error.reducer";
 import friendReducer from "./friends/friends.reducer";
 import utilsReducer from "./utils/utils.reducer";
 import holidaysReducer from "./holidays/holidays.reducer";
+import itemsReducer from "./items/items.reducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   friends: friendReducer,
   utils: utilsReducer,
   holidays: holidaysReducer,
+  items: itemsReducer,
 });
