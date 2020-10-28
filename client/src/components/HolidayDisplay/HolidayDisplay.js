@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { loadItems, setItem } from "../../redux/items/items.actions";
+import { loadItems, setItem, setItemId } from "../../redux/items/items.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import "./HolidayDisplay.scss";
 
-const HolidayDisplay = ({ items, loadItems, setItem }) => {
+const HolidayDisplay = ({ items, loadItems, setItem, holidays, setItemId }) => {
   useEffect(() => {
     if (items.holidayId) {
       loadItems(items.holidayId);
     }
   }, []);
-
+  const handleItemClick = (e) => {
+    const itemId = e.currentTarget.parentNode.getAttribute("data-id");
+    const itemName = e.currentTarget.parentNode.getAttribute("data-name");
+    setItemId(itemId, itemName);
+    // loadItems(itemId);
+  };
   const handleItemChange = (e) => {
     setItem(e.target.value);
   };
@@ -77,7 +82,9 @@ const HolidayDisplay = ({ items, loadItems, setItem }) => {
     <div className="homepage__info__occasionInfo">
       {items.holidayName ? (
         <div>
-          <h2>{items.holidayName}'s items</h2>
+          <h2>
+            {holidays.friendName}'s {items.holidayName} Items
+          </h2>
           <input
             type="text"
             placeholder="Enter a new item"
@@ -97,13 +104,13 @@ const HolidayDisplay = ({ items, loadItems, setItem }) => {
                   icon={faPencilAlt}
                   onClick={handleItemEdit}
                 />
-                <span>{item.name} </span>
+                <span onClick={handleItemClick}>{item.name} </span>
               </li>
             ))}
           </ul>
         </div>
       ) : (
-        <h2>Holiday's Items</h2>
+        <h2>Items</h2>
       )}
     </div>
   );
@@ -111,11 +118,13 @@ const HolidayDisplay = ({ items, loadItems, setItem }) => {
 
 const mapStateToProps = (state) => ({
   items: state.items,
+  holidays: state.holidays,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadItems: (holidayId) => dispatch(loadItems(holidayId)),
   setItem: (item) => dispatch(setItem(item)),
+  setItemId: (itemId, itemName) => dispatch(setItemId(itemId, itemName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HolidayDisplay);

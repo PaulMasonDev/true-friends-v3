@@ -24,7 +24,7 @@ export const setItem = (item) => ({
   payload: item,
 });
 
-// export const setDate = (date) => ({
-//   type: HolidaysActionTypes.SET_DATE,
-//   payload: date,
-// });
+export const setItemId = (itemId, itemName) => ({
+  type: ItemsActionTypes.SET_ITEM_ID,
+  payload: { itemId, itemName },
+});

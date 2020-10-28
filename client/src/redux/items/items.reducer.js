@@ -4,8 +4,9 @@ const initialState = {
   holidayId: "",
   holidayName: "",
   holidayDate: String,
+  itemId: "",
   itemName: "",
-  items: [{ name: "Television" }, { name: "Bracelet" }],
+  items: [],
 };
 
 export default function (state = initialState, action) {
@@ -25,6 +26,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         itemName: action.payload,
+      };
+    case ItemsActionTypes.SET_ITEM_ID:
+      return {
+        ...state,
+        itemId: action.payload.itemId,
+        itemName: action.payload.itemName,
       };
     default:
       return state;

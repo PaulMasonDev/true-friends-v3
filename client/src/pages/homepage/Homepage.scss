@@ -16,6 +16,7 @@
   grid-template-columns: 4fr;
 }
 
+.homepage__holiday,
 .homepage__item {
   display: grid;
   grid-template-columns: 4fr;
@@ -23,15 +24,10 @@
 }
 
 @media (max-width: 500px) {
-  .homepage {
-    grid-template-columns: 1fr;
-  }
-
-  .homepage__info {
-    grid-template-columns: 1fr;
-  }
-
-  .homepage__item {
+  .homepage,
+  .homepage__info,
+  .homepage__item,
+  .homepage__holiday {
     grid-template-columns: 1fr;
   }
 }

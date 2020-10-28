@@ -31,11 +31,11 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
         <div className="homepage__info">
           <InfoDisplay />
         </div>
-        <div className="homepage__item">
+        <div className="homepage__holiday">
           <HolidayDisplay />
-          {/* <ItemDisplay 
-            displayItem={displayItem}
-          /> */}
+        </div>
+        <div className="homepage__item">
+          <ItemDisplay />
         </div>
       </div>
     </div>

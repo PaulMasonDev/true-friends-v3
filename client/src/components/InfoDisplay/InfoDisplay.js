@@ -163,7 +163,7 @@ const InfoDisplay = ({
           </ul>
         </div>
       ) : (
-        <h2>Friend's Holidays</h2>
+        <h2>Holidays</h2>
       )}
     </div>
   );
