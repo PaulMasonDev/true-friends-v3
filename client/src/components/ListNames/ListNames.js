@@ -5,9 +5,19 @@ import { loadFriends } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { setFriendId } from "../../redux/holidays/holidays.actions";
+import {
+  loadHolidays,
+  setFriendId,
+} from "../../redux/holidays/holidays.actions";
 
-const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
+const ListNames = ({
+  friends,
+  name,
+  auth,
+  loadFriends,
+  setFriendId,
+  loadHolidays,
+}) => {
   const filteredFriends = friends.filter((friend) =>
     friend.name.toLowerCase().includes(name.toLowerCase())
   );
@@ -58,6 +68,7 @@ const ListNames = ({ friends, name, auth, loadFriends, setFriendId }) => {
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const friendName = e.currentTarget.parentNode.getAttribute("data-name");
     setFriendId(friendId, friendName);
+    loadHolidays(friendId);
   };
 
   return (
@@ -98,6 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadFriends: (userId) => dispatch(loadFriends(userId)),
   setFriendId: (friendId, friendName) =>
     dispatch(setFriendId(friendId, friendName)),
+  loadHolidays: (friendId) => dispatch(loadHolidays(friendId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListNames);

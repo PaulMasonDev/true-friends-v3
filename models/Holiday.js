@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Create Schema
 const HolidaySchema = new Schema({
   name: String,
-  date: Date,
+  date: String,
   items: [{ type: mongoose.Schema.Types.ObjectId, ref: "items" }],
 });
 

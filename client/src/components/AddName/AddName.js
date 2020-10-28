@@ -38,7 +38,7 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
         placeholder="Enter Name"
         value={name}
       />
-      <button onClick={handleClick}>ADD NAME</button>
+      <button onClick={handleClick}>Add Name</button>
     </form>
   );
 };

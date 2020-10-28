@@ -4,18 +4,8 @@ const initialState = {
   friendId: "",
   friendName: "",
   holidayName: "",
-  holidays: [
-    // {
-    //   holiday: "birthday",
-    //   date: "10/26/1981",
-    //   items: ["xbox", "lawnmower", "television"],
-    // },
-    // {
-    //   holiday: "anniversary",
-    //   date: "07/15/2018",
-    //   items: ["watch", "cruise", "vacation"],
-    // },
-  ],
+  holidayDate: String,
+  holidays: [],
 };
 
 export default function (state = initialState, action) {
@@ -25,11 +15,21 @@ export default function (state = initialState, action) {
         ...state,
         holidays: action.payload,
       };
-    case HolidaysActionTypes.SET_FRIEND:
+    case HolidaysActionTypes.SET_FRIEND_INFO:
       return {
         ...state,
         friendId: action.payload.friendId,
         friendName: action.payload.friendName,
+      };
+    case HolidaysActionTypes.SET_HOLIDAY:
+      return {
+        ...state,
+        holidayName: action.payload,
+      };
+    case HolidaysActionTypes.SET_DATE:
+      return {
+        ...state,
+        holidayDate: action.payload,
       };
     default:
       return state;

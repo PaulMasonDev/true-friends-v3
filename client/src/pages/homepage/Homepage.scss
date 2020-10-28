@@ -13,5 +13,15 @@
 
 .homepage__info {
   display: grid;
-  grid-template-columns: 4fr 4fr;
+  grid-template-columns: 4fr 2fr;
+}
+
+@media (max-width: 500px) {
+  .homepage {
+    grid-template-columns: 1fr;
+  }
+
+  .homepage__info {
+    grid-template-columns: 1fr;
+  }
 }

@@ -4,23 +4,29 @@ const Holiday = require("../../models/Holiday");
 const User = require("../../models/User");
 const router = express.Router();
 
-// CREATE Friend Route
-// router.post("/createfriend/:id/:name", (req, res) => {
-//   const id = req.params.id;
-//   const name = req.params.name;
+// CREATE Holiday Route
+router.post(
+  "/createholiday/:friendId/:holidayName/:holidayDate",
+  (req, res) => {
+    const friendId = req.params.friendId;
+    const holidayName = req.params.holidayName;
+    const holidayDate = req.params.holidayDate;
 
-//   const newFriend = new Friend({
-//     name: name,
-//   });
-//   newFriend
-//     .save()
-//     .then((friend) => {
-//       User.findByIdAndUpdate(id, { $push: { friends: newFriend } })
-//         .then((response) => res.send(" has been successfully added."))
-//         .catch((err) => console.log(err.message));
-//     })
-//     .catch((err) => console.log(err.message));
-// });
+    const newHoliday = new Holiday({
+      name: holidayName,
+      date: holidayDate,
+    });
+
+    newHoliday
+      .save()
+      .then((holiday) => {
+        Friend.findByIdAndUpdate(friendId, { $push: { holidays: newHoliday } })
+          .then((response) => res.send(" has been successgully added"))
+          .catch((err) => console.log(err.message));
+      })
+      .catch((err) => console.log(err.message));
+  }
+);
 
 // READ friend route
 router.get("/pulldata/:id", (req, res) => {
@@ -34,15 +40,15 @@ router.get("/pulldata/:id", (req, res) => {
           await Holiday.findById(holiday._id)
             .then((foundHoliday) => {
               newArr.push(foundHoliday);
-              newArr.sort((a, b) => {
-                if (a.name < b.name) {
-                  return -1;
-                }
-                if (a.name > b.name) {
-                  return 1;
-                }
-                return 0;
-              });
+              // newArr.sort((a, b) => {
+              //   if (a.name < b.name) {
+              //     return -1;
+              //   }
+              //   if (a.name > b.name) {
+              //     return 1;
+              //   }
+              //   return 0;
+              // });
             })
             .catch((err) => console.log(err));
         })
@@ -52,24 +58,37 @@ router.get("/pulldata/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// UPDATE friend route
-// router.put("/updatefriend/:friendid/:name", (req, res) => {
-//   const friendId = req.params.friendid;
-//   const name = req.params.name;
+// UPDATE holiday name route
+router.put("/updateholiday/:holidayId/:holiday", (req, res) => {
+  const holidayId = req.params.holidayId;
+  const holiday = req.params.holiday;
+  console.log("holidayId: ", holidayId, "holiday: ", holiday);
 
-//   Friend.findByIdAndUpdate(friendId, { name: name })
+  Holiday.findByIdAndUpdate(holidayId, { name: holiday })
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+});
+
+// UPDATE holiday date route
+// router.put("/updateholiday/:holidayId/:date", (req, res) => {
+//   const holidayId = req.params.holidayId;
+//   const date = req.params.date;
+//   console.log("holidayId: ", holidayId, "date: ", date);
+
+//   Holiday.findByIdAndUpdate(holidayId, { date: date })
 //     .then((response) => console.log(response))
 //     .catch((err) => console.log(err));
 // });
 
-// DELETE friend route
-// router.delete("/deletefriend/:userid/:friendid", (req, res) => {
-//   const userId = req.params.userid;
-//   const friendId = req.params.friendid;
+// DELETE holiday route
+router.delete("/deleteholiday/:friendId/:holidayId", (req, res) => {
+  const friendId = req.params.friendId;
+  const holidayId = req.params.holidayId;
 
-//   User.findByIdAndUpdate(userId, { $pull: { friends: friendId } })
-//     .then(() => Friend.findByIdAndRemove(friendId))
-//     .then((response) => console.log(response))
-//     .catch((err) => console.log(err));
-// });
+  console.log("friendId: ", friendId, "holidayId: ", holidayId);
+  Friend.findByIdAndUpdate(friendId, { $pull: { holidays: holidayId } })
+    .then(() => Holiday.findByIdAndRemove(holidayId))
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+});
 module.exports = router;
