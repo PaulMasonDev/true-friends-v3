@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadFriends } from "../../redux/friends/friends.actions";
 import "./ListNames.scss";
@@ -94,6 +95,14 @@ const ListNames = ({
           );
         })}
       </ul>
+      <div>
+        <li>
+          <Link to="/login">LOGIN</Link>
+        </li>
+        <li>
+          <Link to="/register">REGISTER</Link>
+        </li>
+      </div>
     </div>
   );
 };

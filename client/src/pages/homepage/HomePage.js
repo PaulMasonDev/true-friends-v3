@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 // COMPONENT IMPORTS
@@ -19,46 +20,6 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
       loadFriends(userId);
     }
   }, []);
-
-  // // HANDLE SEARCHING LOGIC FOR LISTING NAMES
-  // const handleName = (val) => {
-  //   setFriend(val);
-  //   // setUserData(TESTDATA.userData)//Not needed. Used to prevent warning
-  // }
-
-  // // Functions to handle finding
-  // const findFriend = (name) => {
-  //   return userData.friends.find(friend => friend.name === name);
-  // }
-
-  // const findOccasion = (name, occasion) => {
-  //   const foundFriend = userData.friends.find(friend => friend.name === name);
-  //   return foundFriend.occasions.find(testOccasion => testOccasion.occasion === occasion);
-  // }
-
-  // // HANDLE LOGIC FOR DISPLAYING NAME DETAILS WHEN CLICKING ON SPECIFIC NAME
-  // const handleNameClick = (name) => {
-  //   const setupDisplayData = findFriend(name);
-  //   setDisplayData(setupDisplayData);
-  // }
-
-  // // HANDLE LOGIC FOR DISPLAYING OCCASION DETAIL WHEN CLICKING ON SPECIFIC OCCASION
-  // const handleOccasionClick = (name, occasion) => {
-  //   // THEN GO THROUGH THE OCCASIONS OF THE FRIEND TO FIND A MATCH
-  //   const foundOccasion = findOccasion(name, occasion);
-  //   setDisplayOccasion(foundOccasion);
-  // }
-
-  // // HANDLE LOGIC FOR CLICKING ON AN ITEM
-  // const handleDisplayItem = (name, occasion, item) => {
-  //   // FIRST FIND THE NAME YOU WANT.
-  //   const foundFriend = findFriend(name);
-  //   // THEN GO THROUGH THE OCCASIONS OF THE FRIEND TO FIND A MATCH
-  //   const foundOccasion = foundFriend.occasions.find(testOccasion => testOccasion.occasion === occasion.occasion);
-  //   // THEN GO THROUGH THE ITEMS OF THE FRIEND TO FIND A MATCH
-  //   const foundItem = foundOccasion.items.find(testItem => testItem === item);
-  //   setDisplayItem(foundItem);
-  // }
 
   return (
     <div>
