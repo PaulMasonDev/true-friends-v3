@@ -1,6 +1,5 @@
 import HolidaysActionTypes from "./holidays.types";
 import axios from "axios";
-import holidaysReducer from "./holidays.reducer";
 
 export const loadHolidays = (friendId) => (dispatch) => {
   axios

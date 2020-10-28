@@ -26,7 +26,7 @@ const InfoDisplay = ({ holidays, setHoliday, setDate, loadHolidays }) => {
   const createHoliday = () => {
     const date = new Date(holidays.holidayDate);
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
-    const day = ("0" + date.getDate()).slice(-2);
+    const day = ("0" + (date.getDate() + 1)).slice(-2);
     const completedDate = [month, day, date.getFullYear()].join("-");
     axios
       .post(
