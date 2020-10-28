@@ -6,17 +6,39 @@ import {
   setDate,
   loadHolidays,
 } from "../../redux/holidays/holidays.actions";
+import { loadItems, setHolidayId } from "../../redux/items/items.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 import "./InfoDisplay.scss";
 
-const InfoDisplay = ({ holidays, setHoliday, setDate, loadHolidays }) => {
+const InfoDisplay = ({
+  holidays,
+  setHoliday,
+  setDate,
+  loadHolidays,
+  loadItems,
+  setHolidayId,
+}) => {
   useEffect(() => {
     if (holidays.friendId) {
       loadHolidays(holidays.friendId);
     }
   }, []);
+  const handleHolidayClick = (e) => {
+    console.log(
+      "holidayName",
+      e.currentTarget.parentNode.getAttribute("data-name")
+    );
+    console.log(
+      "holidayId",
+      e.currentTarget.parentNode.getAttribute("data-id")
+    );
+    const holidayId = e.currentTarget.parentNode.getAttribute("data-id");
+    const holidayName = e.currentTarget.parentNode.getAttribute("data-name");
+    setHolidayId(holidayId, holidayName);
+    loadItems(holidayId);
+  };
   const handleHolidayChange = (e) => {
     setHoliday(e.target.value);
   };
@@ -129,7 +151,7 @@ const InfoDisplay = ({ holidays, setHoliday, setDate, loadHolidays }) => {
                   icon={faPencilAlt}
                   onClick={handleHolidayEdit}
                 />
-                <span>{holiday.name} </span>
+                <span onClick={handleHolidayClick}>{holiday.name} </span>
                 {/* <FontAwesomeIcon
                   className="inline icon blue"
                   icon={faPencilAlt}
@@ -155,6 +177,9 @@ const mapDispatchToProps = (dispatch) => ({
   setHoliday: (holiday) => dispatch(setHoliday(holiday)),
   setDate: (date) => dispatch(setDate(date)),
   loadHolidays: (friendId) => dispatch(loadHolidays(friendId)),
+  loadItems: (holidayId) => dispatch(loadItems(holidayId)),
+  setHolidayId: (holidayId, holidayName) =>
+    dispatch(setHolidayId(holidayId, holidayName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoDisplay);

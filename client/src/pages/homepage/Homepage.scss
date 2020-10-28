@@ -18,7 +18,8 @@
 
 .homepage__item {
   display: grid;
-  grid-template-columns: 4fr 4fr;
+  grid-template-columns: 4fr;
+  margin-top: 20px;
 }
 
 @media (max-width: 500px) {

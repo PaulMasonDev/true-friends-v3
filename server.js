@@ -11,6 +11,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const friends = require("./routes/crud/friends");
 const holidays = require("./routes/crud/holidays");
+const items = require("./routes/crud/items");
 
 require("dotenv").config();
 
@@ -45,6 +46,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/friends", friends);
 app.use("/holidays", holidays);
+app.use("/items", items);
 
 // Redirect to React in non Dev environment
 if (environment !== "dev") {
