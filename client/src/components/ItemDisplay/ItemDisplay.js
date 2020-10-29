@@ -19,7 +19,7 @@ const ItemDisplay = ({ items }) => {
           <h2>{items.itemName}</h2>
           <p>
             <a
-              href={`${amazonUrl}${items.itemName}`}
+              href={`${amazonUrl}${items.itemName}&tag=webdevpaulmas-20`}
               target="_blank"
               rel="noopener noreferrer"
             >
