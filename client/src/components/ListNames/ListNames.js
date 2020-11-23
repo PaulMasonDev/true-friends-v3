@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -29,28 +29,42 @@ const ListNames = ({
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const name = e.currentTarget.parentNode.getAttribute("data-name");
 
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${name} from your list? You will lose all data associated with this person.`
-      )
-    ) {
-      axios
-        .delete(`/friends/deletefriend/${auth.user.id}/${friendId}`)
-        .then((res) => {
-          alert(`${name.trim()} has been deleted.`);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      window.alert(`${name} was not deleted.  You are a TRUE FRIEND indeed!`);
-    }
+    Swal.fire({
+      title: `Are you sure you want to delete ${name} from your list? You will lose all data associated with this person.`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete them!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/friends/deletefriend/${auth.user.id}/${friendId}`)
+          .then((res) => {})
+          .catch((err) => console.log(err));
+        Swal.fire(
+          "Deleted!",
+          `${name.trim()} has been deleted. Be sure to refresh the list.`,
+          "success"
+        );
+        loadFriends(auth.user.id);
+      } else {
+        Swal.fire(
+          "Phew!",
+          `${name} was not deleted.  You are a TRUE FRIEND indeed!`,
+          "info"
+        );
+      }
+    });
     loadFriends(auth.user.id);
   };
 
   const handleEdit = async (e) => {
-    const tempName = e.currentTarget.nextElementSibling.textContent;
+    const tempName = e.currentTarget.nextElementSibling.textContent.trim();
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const { value: name } = await Swal.fire({
-      title: `What do you want to change ${tempName} to?`,
+      title: `What do you want to change the name, "${tempName}" to?`,
       input: "text",
       showCancelButton: true,
       inputValidator: (value) => {
@@ -60,7 +74,7 @@ const ListNames = ({
       },
     });
     if (name) {
-      Swal.fire(`Name changed to ${name}`);
+      Swal.fire(`Name changed to ${name}`, "", "success");
     }
     if (name === undefined) return;
     console.log(name);
@@ -110,6 +124,7 @@ const ListNames = ({
           );
         })}
       </ul>
+
       {/* <div>
         <li>
           <Link to="/login">LOGIN</Link>

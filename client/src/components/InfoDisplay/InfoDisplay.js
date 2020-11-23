@@ -12,8 +12,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 import "./InfoDisplay.scss";
+import { loadFriends } from "../../redux/friends/friends.actions";
 
 const InfoDisplay = ({
+  auth,
   holidays,
   setHoliday,
   setDate,
@@ -75,7 +77,7 @@ const InfoDisplay = ({
       },
     });
     if (holiday) {
-      Swal.fire(`Holiday changed to ${holiday}`);
+      Swal.fire(`Holiday changed to ${holiday}`, "", "success");
     }
     if (holiday === undefined) return;
     axios
@@ -88,23 +90,7 @@ const InfoDisplay = ({
       .catch((err) => console.log(err));
     loadHolidays(holidays.friendId);
   };
-  // const handleDateEdit = (e) => {
-  //   const tempDate = e.currentTarget.nextElementSibling.textContent;
-  //   const holidayId = e.currentTarget.parentNode.getAttribute("data-id");
-  //   const date = prompt(
-  //     `What do you want to change the date of ${tempDate} to?`
-  //   );
 
-  //   axios
-  //     .put(`/holidays/updatedate/${holidayId}/${date}`)
-  //     .then((res) => {
-  //       axios
-  //         .get(`/holidays/pulldata/${holidays.friendId}`)
-  //         .catch((err) => console.log(err));
-  //     })
-  //     .catch((err) => console.log(err));
-  //   loadHolidays(holidays.friendId);
-  // };
   const handleDelete = (e) => {
     const holidayId = e.currentTarget.parentNode.getAttribute("data-id");
     const name = e.currentTarget.parentNode.getAttribute("data-name");
@@ -116,24 +102,34 @@ const InfoDisplay = ({
       "friendId: ",
       holidays.friendId
     );
-
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${holidays.friendName}'s ${name} from your list? You will lose all data associated with this holiday.`
-      )
-    ) {
-      axios
-        .delete(`/holidays/deleteholiday/${holidays.friendId}/${holidayId}`)
-        .then((res) => {
-          alert(`${holidays.friendName}'s ${name.trim()} has been deleted.`);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      window.alert(
-        `${holidays.friendName}'s ${name} was not deleted.  You are a TRUE FRIEND indeed!`
-      );
-    }
-    loadHolidays(holidays.friendId);
+    Swal.fire({
+      title: `Are you sure you want to delete ${holidays.friendName}'s ${name} from your list? You will lose all data associated with this holiday.`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete them!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/holidays/deleteholiday/${holidays.friendId}/${holidayId}`)
+          .then((res) => {})
+          .catch((err) => console.log(err));
+        Swal.fire(
+          "Deleted!",
+          `${holidays.friendName}'s ${name.trim()} has been deleted.`,
+          "success"
+        );
+        loadHolidays(holidays.friendId);
+      } else {
+        Swal.fire(
+          "Phew!",
+          `${holidays.friendName}'s ${name} was not deleted.  You are a TRUE FRIEND indeed!`,
+          "info"
+        );
+      }
+    });
   };
   return (
     <div className="homepage__info__display">
@@ -184,6 +180,7 @@ const InfoDisplay = ({
 
 const mapStateToProps = (state) => ({
   holidays: state.holidays,
+  auth: state.auth,
 });
 
 const mapDispatchToProps = (dispatch) => ({

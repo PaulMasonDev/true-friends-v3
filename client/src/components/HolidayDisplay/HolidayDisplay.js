@@ -46,7 +46,7 @@ const HolidayDisplay = ({ items, loadItems, setItem, holidays, setItemId }) => {
       },
     });
     if (item) {
-      Swal.fire(`Item changed to ${item}`);
+      Swal.fire(`Item changed to ${item}`, "", "success");
     }
     if (item === undefined) return;
     axios
@@ -72,23 +72,34 @@ const HolidayDisplay = ({ items, loadItems, setItem, holidays, setItemId }) => {
       items.holidayId
     );
 
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${items.holidayName}'s ${name} from your list? You will lose all data associated with this item.`
-      )
-    ) {
-      axios
-        .delete(`/items/deleteitem/${items.holidayId}/${itemId}`)
-        .then((res) => {
-          alert(`${items.holidayName}'s ${name.trim()} has been deleted.`);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      window.alert(
-        `${items.holidayName}'s ${name} was not deleted.  You are a TRUE FRIEND indeed!`
-      );
-    }
-    loadItems(items.holidayId);
+    Swal.fire({
+      title: `Are you sure you want to delete ${items.holidayName}'s ${name} from your list? You will lose all data associated with this item.`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete them!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/items/deleteitem/${items.holidayId}/${itemId}`)
+          .then((res) => {})
+          .catch((err) => console.log(err));
+        Swal.fire(
+          "Deleted!",
+          `${items.holidayName}'s ${name.trim()} has been deleted.`,
+          "success"
+        );
+        loadItems(items.holidayId);
+      } else {
+        Swal.fire(
+          "Phew!",
+          `${items.holidayName}'s ${name} was not deleted.  You are a TRUE FRIEND indeed!`,
+          "info"
+        );
+      }
+    });
   };
 
   return (

@@ -1,5 +1,6 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import Swol from "sweetalert2";
 
 import { connect } from "react-redux";
 import { setFriend, loadFriends } from "../../redux/friends/friends.actions";
@@ -7,6 +8,7 @@ import { setFriend, loadFriends } from "../../redux/friends/friends.actions";
 import "./AddName.scss";
 
 const AddName = ({ auth, name, setFriend, loadFriends }) => {
+  const [toggle, setToggle] = useState(false);
   // HANDLE SEARCHING LOGIC FOR LISTING NAMES
   const handleChange = (e) => {
     setFriend(e.target.value);
@@ -18,7 +20,7 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
     axios
       .post(`/friends/createfriend/${auth.user.id}/${name.trim()}`)
       .then((res) => {
-        alert(`${name.trim()}${res.data}`);
+        Swol.fire(`${name.trim()}${res.data}`, "", "success");
       })
       .then((res) => {
         axios
@@ -36,7 +38,7 @@ const AddName = ({ auth, name, setFriend, loadFriends }) => {
       <input
         onChange={handleChange}
         type="Search"
-        placeholder="Enter Name"
+        placeholder="Search/Add Name"
         value={name}
       />
       <button onClick={handleClick}>Add Name</button>
