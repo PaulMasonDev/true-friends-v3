@@ -29,7 +29,13 @@ const BackgroundVideo = ({ enterSite }) => {
 
   return (
     <div className={classes.Container}>
-      <video autoPlay="autoplay" loop="loop" muted className={classes.Video}>
+      <video
+        src={videos[randVidIdx]}
+        autoPlay="autoplay"
+        loop="loop"
+        muted
+        className={classes.Video}
+      >
         <source src={videos[randVidIdx]} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
