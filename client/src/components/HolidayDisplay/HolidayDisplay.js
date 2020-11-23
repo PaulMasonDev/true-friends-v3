@@ -35,7 +35,7 @@ const HolidayDisplay = ({ items, loadItems, setItem, holidays, setItemId }) => {
     const tempItem = e.currentTarget.nextElementSibling.textContent;
     const itemId = e.currentTarget.parentNode.getAttribute("data-id");
     const item = prompt(`What do you want to change ${tempItem} to?`);
-
+    if (item === null) return;
     axios
       .put(`/items/updateitem/${itemId}/${item}`)
       .then((res) => {

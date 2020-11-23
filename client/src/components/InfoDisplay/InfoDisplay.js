@@ -64,7 +64,7 @@ const InfoDisplay = ({
     const tempHoliday = e.currentTarget.nextElementSibling.textContent;
     const holidayId = e.currentTarget.parentNode.getAttribute("data-id");
     const holiday = prompt(`What do you want to change ${tempHoliday} to?`);
-
+    if (holiday === null) return;
     axios
       .put(`/holidays/updateholiday/${holidayId}/${holiday}`)
       .then((res) => {

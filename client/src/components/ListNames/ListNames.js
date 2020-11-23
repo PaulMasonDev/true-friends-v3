@@ -48,6 +48,7 @@ const ListNames = ({
     const tempName = e.currentTarget.nextElementSibling.textContent;
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
     const name = prompt(`What do you want to change ${tempName} to?`);
+    if (name === null) return;
     console.log(name);
     axios
       .put(`/friends/updatefriend/${friendId}/${name}`)
