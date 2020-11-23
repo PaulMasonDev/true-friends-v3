@@ -48,19 +48,24 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Splash />
-        {/* <Header />
+        {console.log("splashDone?", this.state.splashDone)}
+        {this.props.splashDone ? <Header /> : null}
         <Switch>
-          <Route path="/" exact component={HomePage} />
+          <Route path="/home" exact component={HomePage} />
+          <Route path="/" exact component={Splash} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        </Switch> */}
+        </Switch>
       </div>
     );
   }
 }
 
-export default connect(null, null)(App);
+const mapStateToProps = (state) => ({
+  splashDone: state.utils.splashDone,
+});
+
+export default connect(mapStateToProps)(App);

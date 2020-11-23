@@ -1,13 +1,23 @@
 .homepage {
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  position: relative;
+  grid-template-columns: 1fr;
   margin: 10px;
+  width: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  input {
+    width: 51%;
+    transform: translateX(50%);
+  }
 }
 
 .homepage__names {
   background-color: #ccc;
   padding: 10px;
   margin: 0px 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
 }
 
@@ -23,12 +33,27 @@
   margin-top: 20px;
 }
 
+.homepage__footer {
+  margin-top: 20px;
+}
+
 @media (max-width: 500px) {
   .homepage,
+  .homepage__names,
   .homepage__info,
+  .homepage__info__display,
+  .homepage__info__occasionInfo,
+  .homepage__info__item,
   .homepage__item,
   .homepage__holiday {
     grid-template-columns: 1fr;
+    width: 100vw;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .homepage__footer {
+    margin-bottom: 10px;
   }
 }
 

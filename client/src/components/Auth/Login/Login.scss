@@ -1,0 +1,24 @@
+.Login__form {
+  width: 35%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  input {
+    width: 50%;
+  }
+
+  button {
+    width: fit-content;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.Login__form-email,
+.Login__form-password {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}

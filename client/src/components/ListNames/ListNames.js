@@ -95,14 +95,14 @@ const ListNames = ({
           );
         })}
       </ul>
-      <div>
+      {/* <div>
         <li>
           <Link to="/login">LOGIN</Link>
         </li>
         <li>
           <Link to="/register">REGISTER</Link>
         </li>
-      </div>
+      </div> */}
     </div>
   );
 };

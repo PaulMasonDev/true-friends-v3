@@ -1,5 +1,5 @@
 const UtilsActionTypes = {
-  // REFRESH_STATE: "REFRESH_STATE",
+  ENTER_SITE: "ENTER_SITE",
 };
 
 export default UtilsActionTypes;
