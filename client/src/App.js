@@ -15,6 +15,7 @@ import Register from "./components/Auth/Register/Register";
 import Login from "./components/Auth/Login/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Splash from "./pages/Splash/Splash";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -47,7 +48,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Splash />
+        {/* <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/about" component={About} />
@@ -55,7 +57,7 @@ class App extends React.Component {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        </Switch>
+        </Switch> */}
       </div>
     );
   }
