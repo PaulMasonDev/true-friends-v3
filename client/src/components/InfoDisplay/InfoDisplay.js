@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -60,11 +61,23 @@ const InfoDisplay = ({
       .catch((err) => console.log(err));
   };
 
-  const handleHolidayEdit = (e) => {
-    const tempHoliday = e.currentTarget.nextElementSibling.textContent;
+  const handleHolidayEdit = async (e) => {
+    const tempHoliday = e.currentTarget.nextElementSibling.textContent.trim();
     const holidayId = e.currentTarget.parentNode.getAttribute("data-id");
-    const holiday = prompt(`What do you want to change ${tempHoliday} to?`);
-    if (holiday === null) return;
+    const { value: holiday } = await Swal.fire({
+      title: `What do you want to change the holiday, "${tempHoliday}" to?`,
+      input: "text",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You didn't type anything.";
+        }
+      },
+    });
+    if (holiday) {
+      Swal.fire(`Holiday changed to ${holiday}`);
+    }
+    if (holiday === undefined) return;
     axios
       .put(`/holidays/updateholiday/${holidayId}/${holiday}`)
       .then((res) => {

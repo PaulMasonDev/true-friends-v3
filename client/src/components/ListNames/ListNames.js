@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadFriends } from "../../redux/friends/friends.actions";
@@ -10,6 +11,7 @@ import {
   loadHolidays,
   setFriendId,
 } from "../../redux/holidays/holidays.actions";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 const ListNames = ({
   friends,
@@ -44,11 +46,23 @@ const ListNames = ({
     loadFriends(auth.user.id);
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = async (e) => {
     const tempName = e.currentTarget.nextElementSibling.textContent;
     const friendId = e.currentTarget.parentNode.getAttribute("data-id");
-    const name = prompt(`What do you want to change ${tempName} to?`);
-    if (name === null) return;
+    const { value: name } = await Swal.fire({
+      title: `What do you want to change ${tempName} to?`,
+      input: "text",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You didn't return anything.";
+        }
+      },
+    });
+    if (name) {
+      Swal.fire(`Name changed to ${name}`);
+    }
+    if (name === undefined) return;
     console.log(name);
     axios
       .put(`/friends/updatefriend/${friendId}/${name}`)
