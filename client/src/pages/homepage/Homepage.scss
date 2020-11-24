@@ -1,12 +1,17 @@
+.Home {
+  display: flex;
+}
 .homepage {
   display: grid;
   position: relative;
   grid-template-columns: 1fr;
-  margin: 10px;
+  margin: 10px 0;
   width: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-
+  // left: 50%;
+  // transform: translateX(-50%);
+  h2 {
+    min-width: 40%;
+  }
   input {
     width: 51%;
     transform: translateX(50%);
@@ -14,11 +19,11 @@
 }
 
 .homepage__names {
-  background-color: #ccc;
+  // background-color: #ccc;
   padding: 10px;
   margin: 0px 10px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  // border-radius: 5px;
 }
 
 .homepage__info {

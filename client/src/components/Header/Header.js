@@ -10,8 +10,10 @@ const Header = ({ auth, logoutUser }) => {
     <div className="header">
       {auth.isAuthenticated ? (
         <h3>
-          You are a true friend,{" "}
-          <span style={{ color: "lightblue" }}>{auth.user.name}</span>
+          <Link to="/home">
+            You are a true friend,{" "}
+            <span style={{ color: "lightblue" }}>{auth.user.name}</span>
+          </Link>
         </h3>
       ) : (
         <h1>

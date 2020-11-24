@@ -1,0 +1,12 @@
+.Sidebar img {
+  margin: 10px;
+  width: 30vw;
+  overflow: hidden;
+  z-index: -1;
+}
+
+@media (max-width: 500px) {
+  .Sidebar img {
+    display: none;
+  }
+}

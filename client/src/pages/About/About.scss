@@ -1,0 +1,11 @@
+.About {
+  padding: 50px;
+  width: 50%;
+}
+
+@media (max-width: 500px) {
+  .About {
+    font-size: 1rem;
+    width: 100%;
+  }
+}

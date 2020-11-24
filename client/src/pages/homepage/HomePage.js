@@ -12,6 +12,7 @@ import ItemDisplay from "../../components/ItemDisplay/ItemDisplay";
 import { loadFriends, setFriend } from "../../redux/friends/friends.actions";
 
 import "./Homepage.scss";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
   //LOAD INITIAL USER DATA
@@ -23,6 +24,7 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
 
   return (
     <div className="Home">
+      <Sidebar />
       {isAuthenticated ? (
         <div className="homepage">
           <div className="homepage__names">
@@ -47,6 +49,7 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
           <h2>Please login</h2>
         </div>
       )}
+      <Sidebar />
     </div>
   );
 };
