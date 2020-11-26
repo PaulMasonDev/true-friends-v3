@@ -1,6 +1,14 @@
 .Footer {
-  // position: absolute;
-  // bottom: 20px;
-  // left: 50%;
-  // transform: translateX(-50%);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 500px) {
+  .Footer {
+    p {
+      width: 70vw;
+    }
+  }
 }

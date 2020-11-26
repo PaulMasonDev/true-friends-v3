@@ -26,3 +26,30 @@
     margin-top: 30px;
   }
 }
+
+@media (max-width: 500px) {
+  .Login {
+    width: 90vw;
+    // position: absolute;
+    // left: 50%;
+    // transform: translateX(-50%);
+    // margin-top: 30px;
+
+    .Login__form-email,
+    .Login__form-password {
+    }
+
+    input,
+    label {
+      text-align: left;
+    }
+
+    button {
+      width: 50%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 30px;
+    }
+  }
+}
