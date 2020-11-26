@@ -14,9 +14,9 @@ const ItemDisplay = ({ items }) => {
 
   return (
     <div className="homepage__info__item">
-      <h2>Shopping Links</h2>
       {items.itemName ? (
         <div>
+          <h2>Shopping Links</h2>
           <h3>{items.itemName}</h3>
           <p>
             <a

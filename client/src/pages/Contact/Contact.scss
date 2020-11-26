@@ -1,0 +1,11 @@
+.Contact {
+  padding: 50px;
+  width: 50%;
+}
+
+@media (max-width: 500px) {
+  .Contact {
+    font-size: 1rem;
+    width: 100%;
+  }
+}

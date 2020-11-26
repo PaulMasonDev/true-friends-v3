@@ -171,9 +171,7 @@ const InfoDisplay = ({
             ))}
           </ul>
         </div>
-      ) : (
-        <h2>Holidays</h2>
-      )}
+      ) : null}
     </div>
   );
 };

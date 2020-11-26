@@ -23,33 +23,41 @@ const HomePage = ({ isAuthenticated, userId, loadFriends }) => {
   }, []);
 
   return (
-    <div className="Home">
-      <Sidebar />
-      {isAuthenticated ? (
-        <div className="homepage">
-          <div className="homepage__names">
-            <AddName />
-            <ListNames />
+    <div>
+      <div className="Home">
+        <Sidebar />
+        {isAuthenticated ? (
+          <div className="homepage">
+            <div className="homepage__names">
+              <AddName />
+              <ListNames />
+            </div>
+            <div className="homepage__info">
+              <InfoDisplay />
+            </div>
+            <div className="homepage__holiday">
+              <HolidayDisplay />
+            </div>
+            <div className="homepage__item">
+              <ItemDisplay />
+            </div>
           </div>
-          <div className="homepage__info">
-            <InfoDisplay />
+        ) : (
+          <div>
+            <h2 style={{ color: "#000" }}>
+              Please &nbsp;
+              <Link to="/login" style={{ color: "#000" }}>
+                login
+              </Link>
+              &nbsp; or &nbsp;
+              <Link to="/register" style={{ color: "#000" }}>
+                register
+              </Link>
+            </h2>
           </div>
-          <div className="homepage__holiday">
-            <HolidayDisplay />
-          </div>
-          <div className="homepage__item">
-            <ItemDisplay />
-          </div>
-          <footer className="homepage__footer">
-            <p>Copyright &copy; 2020 True Friends</p>
-          </footer>
-        </div>
-      ) : (
-        <div>
-          <h2>Please login</h2>
-        </div>
-      )}
-      <Sidebar />
+        )}
+        <Sidebar />
+      </div>
     </div>
   );
 };

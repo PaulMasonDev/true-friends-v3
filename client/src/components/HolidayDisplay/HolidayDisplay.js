@@ -133,9 +133,7 @@ const HolidayDisplay = ({ items, loadItems, setItem, holidays, setItemId }) => {
             ))}
           </ul>
         </div>
-      ) : (
-        <h2>Items</h2>
-      )}
+      ) : null}
     </div>
   );
 };

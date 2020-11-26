@@ -1,5 +1,8 @@
 .Home {
   display: flex;
+  // position: absolute;
+  // left: 50%;
+  // transform: translateX(-62%);
 }
 .homepage {
   display: grid;
@@ -24,6 +27,11 @@
   margin: 0px 10px;
   margin-bottom: 20px;
   // border-radius: 5px;
+  .homepage__names__add_search {
+    h2 {
+      text-align: center;
+    }
+  }
 }
 
 .homepage__info {
@@ -35,10 +43,6 @@
 .homepage__item {
   display: grid;
   grid-template-columns: 4fr;
-  margin-top: 20px;
-}
-
-.homepage__footer {
   margin-top: 20px;
 }
 

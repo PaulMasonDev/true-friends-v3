@@ -16,6 +16,7 @@ import Login from "./components/Auth/Login/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Splash from "./pages/Splash/Splash";
+import Footer from "./components/Footer/Footer";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -59,6 +60,7 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
         </Switch>
+        {this.props.splashDone ? <Footer /> : null}
       </div>
     );
   }
